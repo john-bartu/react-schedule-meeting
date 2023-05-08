@@ -29,9 +29,9 @@ type StyleVariables = {
   $backgroundColorRGB: string;
   $primaryColorContrastRGB: string;
   $calendarColoredTextRGB: string;
-}; 
+};
 
-const Container = styled('div')<StyleVariables>`
+const Container = styled('div') <StyleVariables>`
   width: 100%;
   display: flex;
   align-items: center;
@@ -304,26 +304,11 @@ export const ScheduleMeeting: React.FC<Props> = ({
 
     // iterate through all available timeslots
     for (const availableTimeslot of orderedAvailableTimeslots) {
-      const timeslotDuration = differenceInMinutes(
-        new Date(availableTimeslot.endTime),
-        new Date(availableTimeslot.startTime),
-      );
-
-      // this prevents start times from being created where the event duration runs past the available timeslot
-      let startTimesPossible =
-        Math.floor(timeslotDuration / (eventDurationInMinutes + eventStartTimeSpreadInMinutes)) - 1;
-
-      while (startTimesPossible >= 0) {
-        const newStartTimeEvent: StartTimeEvent = {
-          availableTimeslot,
-          startTime: addMinutes(
-            new Date(availableTimeslot.startTime),
-            startTimesPossible * (eventDurationInMinutes + eventStartTimeSpreadInMinutes),
-          ),
-        };
-        startTimeEvents.push(newStartTimeEvent);
-        startTimesPossible--;
-      }
+      const newStartTimeEvent: StartTimeEvent = {
+        availableTimeslot,
+        startTime: new Date(availableTimeslot.startTime)
+      };
+      startTimeEvents.push(newStartTimeEvent);
     }
 
     // set initial display date
